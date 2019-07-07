@@ -55,12 +55,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       posts: {
-        name: ''
+        name: '',
+        image: ''
       },
       errors: []
     };
@@ -69,17 +89,35 @@ __webpack_require__.r(__webpack_exports__);
     submitCategory: function submitCategory() {
       var _this = this;
 
+      preventDefault();
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/categories", this.posts).then(function (response) {
-        console.log(response);
-
-        _this.$router.push({
-          path: '/'
-        });
+        console.log(response); //this.$router.push({path:'/'})
 
         _this.posts = response.data;
       })["catch"](function (e) {
         _this.errors.push(e);
       });
+    },
+    onFileChange: function onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      console.log(files);
+      if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
+      var _this2 = this;
+
+      var image = new Image();
+      var reader = new FileReader(); //   var vm = this;
+
+      reader.onload = function (e) {
+        _this2.posts.image = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    removeImage: function removeImage(e) {
+      this.posts.image = '';
     }
   }
 });
@@ -125,7 +163,7 @@ var render = function() {
       _c(
         "form",
         {
-          staticClass: "col s12 l6",
+          staticClass: "col s12 l12",
           on: {
             submit: function($event) {
               return _vm.submitCategory()
@@ -133,38 +171,71 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "input-field" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.posts.name,
-                  expression: "posts.name"
-                }
-              ],
-              attrs: { id: "name", type: "text" },
-              domProps: { value: _vm.posts.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c("div", { staticClass: "col s12 l3" }, [
+            _c("div", { staticClass: "input-field " }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.posts.name,
+                    expression: "posts.name"
                   }
-                  _vm.$set(_vm.posts, "name", $event.target.value)
+                ],
+                attrs: { id: "name", type: "text" },
+                domProps: { value: _vm.posts.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.posts, "name", $event.target.value)
+                  }
                 }
-              }
-            }),
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Название")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "file-field input-field" }, [
+                _c("div", { staticClass: "btn" }, [
+                  _c("span", [_vm._v("Загрузить изображение")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: { type: "file" },
+                    on: { change: _vm.onFileChange }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ]),
             _vm._v(" "),
-            _c("label", { attrs: { for: "name" } }, [_vm._v("Название")])
+            _vm._m(2)
           ]),
           _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2)
+          _c("div", { staticClass: "col s12 l3 center" }, [
+            !_vm.posts.image
+              ? _c("div", [
+                  _c("img", {
+                    staticStyle: { height: "200px" },
+                    attrs: { src: "/images/No_image.png" }
+                  })
+                ])
+              : _c("div", [
+                  _c("img", {
+                    staticStyle: { height: "200px" },
+                    attrs: { src: _vm.posts.image }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "btn", on: { click: _vm.removeImage } },
+                    [_vm._v("Удалить изо")]
+                  )
+                ])
+          ])
         ]
-      ),
-      _vm._v(" "),
-      _vm._m(3)
+      )
     ])
   ])
 }
@@ -183,17 +254,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        { staticClass: "waves-effect waves-light btn orange lighten-2 mb2" },
-        [
-          _c("i", { staticClass: "material-icons left" }, [_vm._v("backup")]),
-          _vm._v(
-            "\n                    Загрузить изображение\n                "
-          )
-        ]
-      )
+    return _c("div", { staticClass: "file-path-wrapper" }, [
+      _c("input", {
+        staticClass: "file-path validate",
+        attrs: { type: "text" }
+      })
     ])
   },
   function() {
@@ -202,20 +267,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("button", { staticClass: "waves-effect waves-light btn" }, [
-        _vm._v("\n                    Сохранить изменения\n                ")
+        _vm._v(
+          "\n                    Сохранить изменения\n                    "
+        )
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col s12 l4 center" }, [
-      _c("img", {
-        staticClass: "responsive-img",
-        staticStyle: { height: "200px" },
-        attrs: { src: "/images/barm-02.jpg" }
-      })
     ])
   }
 ]

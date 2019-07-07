@@ -2,7 +2,7 @@
     <main class="content">
     <div class="page-title">
         <h4>Категории</h4>
-        <router-link to="/add-category/new" tag="button" class="waves-effect waves-light btn grey darken-1">Добавить категорию</router-link>
+        <router-link to="/new" tag="button" class="waves-effect waves-light btn grey darken-1">Добавить категорию</router-link>
     </div>
 
 

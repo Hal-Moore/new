@@ -20999,7 +20999,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
       return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Order-position.vue */ "./resources/js/views/Order-position.vue"));
     }
   }, {
-    path: '/add-category/new',
+    path: '/new',
     name: 'new',
     meta: {
       layout: 'main'

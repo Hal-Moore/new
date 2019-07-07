@@ -69,7 +69,7 @@ export default new Router({
       component: () => import('./views/Order-position.vue')
     },
     {
-      path: '/add-category/new',
+      path: '/new',
       name: 'new',
       meta: { layout: 'main' },
       component: () => import('./views/New.vue')

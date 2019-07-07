@@ -77,7 +77,7 @@ var render = function() {
           "router-link",
           {
             staticClass: "waves-effect waves-light btn grey darken-1",
-            attrs: { to: "/add-category/new", tag: "button" }
+            attrs: { to: "/new", tag: "button" }
           },
           [_vm._v("Добавить категорию")]
         )

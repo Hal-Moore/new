@@ -34,8 +34,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        dd($request->all());
         return Category::create($request->all());
+        
     }
 
     /**
